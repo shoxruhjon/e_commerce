@@ -1,16 +1,19 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from common.models import Media
+from products.utitls import validate_rating
+from mptt.models import MPTTModel, TreeForeignKey
 from django_ckeditor_5.fields import CKEditor5Field
 
+from products.managers import ProductManager
 from django.core.cache import cache
 
 # Create your models here.
 
-class Category(models.Model):
+class Category(MPTTModel):
     name = models.CharField(_("name"), max_length=255)
     image = models.ForeignKey(Media, on_delete=models.SET_NULL, null=True, blank=True)
-    parent = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True)
+    parent = TreeForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name='children')
 
     def __str__(self):
         return self.name
@@ -34,16 +37,16 @@ class Product(models.Model):
     in_stock = models.BooleanField(_("in stock"), default=True)
     brand = models.CharField(_("brand"), max_length=255)
     discount = models.IntegerField(_("discount"), help_text=_("in percentage"))
-#     thumbnail = models.ForeignKey(Media, on_delete=models.SET_NULL, null=True, blank=True)
+    thumbnail = models.ForeignKey(Media, on_delete=models.SET_NULL, null=True, blank=True)
 
-#     objects = ProductManager()
+    objects = ProductManager()
 
-#     def __str__(self):
-#         return self.name
+    def __str__(self):
+        return self.name
 
-#     def save(self, *args, **kwargs):
-#         cache.delete("all_products")
-#         self.category.save()
+    def save(self, *args, **kwargs):
+        cache.delete("all_products")
+        self.category.save()
 
 
 class ProductColour(models.Model):

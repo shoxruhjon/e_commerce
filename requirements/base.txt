@@ -3,3 +3,4 @@ python-environ==0.4.54
 psycopg2-binary==2.9.10
 django-ckeditor==6.7.2
 django-ckeditor-5==0.2.15
+django-mptt==0.16.0
