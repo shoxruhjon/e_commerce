@@ -1,7 +1,5 @@
 from django.contrib import admin
 
-from django.contrib import admin
-
 from orders.models import *
 # Register your models here.
 
