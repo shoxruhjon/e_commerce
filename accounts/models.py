@@ -5,7 +5,7 @@ from django.core.validators import RegexValidator
 
 from accounts.managers import UserManager
 
-# from accounts.utils import check_otp_code
+from accounts.utils import check_otp_code
 
 
 # Create your models here.
@@ -50,7 +50,7 @@ class VerifictionOtp(models.Model):
         RESET_PASSWORD = "reset_password", _("Reset password")
 
     user = models.ForeignKey('accounts.User', on_delete=models.CASCADE, related_name="verification_otp")
-    code = models.IntegerField(_("Otp code"))
+    code = models.IntegerField(_("Otp code"), validators=[check_otp_code])
     type = models.CharField(_("Verification Type"), max_length=60, choices=VerificationType.choices)
     expires_in = models.DateTimeField(_("Expires in"))
     is_active = models.BooleanField(default=True)

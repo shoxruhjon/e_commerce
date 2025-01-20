@@ -10,7 +10,7 @@ from .models import CartItem, Order, Discount
 from django.shortcuts import get_object_or_404
 from products.models import Product
 from accounts.models import UserAddress
-# from django_filters.rest_framework import DjangoFilterBackend
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter
 
 
@@ -83,7 +83,7 @@ class OrderListAPIView(ListAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderListSerializer
     permission_classes = [IsAuthenticated]
-    # filter_backends = [DjangoFilterBackend, SearchFilter]
+    filter_backends = [DjangoFilterBackend, SearchFilter]
     filterset_fields = ['status', 'payment_status']
     search_fields = ['payment_method']
 

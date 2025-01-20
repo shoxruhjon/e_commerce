@@ -10,7 +10,7 @@ from products.serializers import CategoryListSerializer, ProductListSerializer, 
     ProductSizeListSerializer, AddReviewToProductSerializer, ProductReviewUpdateSerializer
 from django.core.exceptions import ObjectDoesNotExist
 from products.models import Category, Product, ProductColour, ProductReview, ProductSize
-# from django_filters.rest_framework import DjangoFilterBackend
+from django_filters.rest_framework import DjangoFilterBackend
 
 from rest_framework.response import Response
 
@@ -26,7 +26,7 @@ class CategoryListAPIView(ListAPIView):
 class ProductListAPIView(ListAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductListSerializer
-    # filter_backends = [DjangoFilterBackend]
+    filter_backends = [DjangoFilterBackend]
     filterset_fields = ['category', "colours", "sizes"]
 
     def get_queryset(self):
