@@ -8,8 +8,6 @@ from accounts.managers import UserManager
 from accounts.utils import check_otp_code
 
 
-# Create your models here.
-
 class User(AbstractUser):
     email = models.EmailField(_("Email"), unique=True)
     phone_number = models.CharField(_("Phone Number"), max_length=20, validators=[RegexValidator(r'^\+?1?\d{9,13}$')],
